@@ -30,6 +30,7 @@
       align-items: center;
       justify-content: center;
       z-index: 9999;
+      transition: opacity 0.5s ease-out;
     }
 
     /* شكل اللودر */
@@ -57,10 +58,18 @@
   </div>
 
   <script>
-    // عند تحميل الصفحة بالكامل، قم بإخفاء اللودر
-    window.addEventListener("load", function() {
-      document.getElementById("loader").style.display = "none";
-    });
+    function hideLoader() {
+      document.getElementById("loader").style.opacity = "0";  // تأثير اختفاء سلس
+      setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+      }, 500);  // وقت إضافي قبل الإخفاء النهائي
+    }
+
+    // التحقق من تحميل تطبيق Flutter بالكامل قبل إخفاء اللودر
+    window.addEventListener("flutterLoaded", hideLoader);
+
+    // إذا لم يتم إطلاق الحدث بعد 10 ثوانٍ، قم بإخفاء اللودر على أي حال (كحل احتياطي)
+    setTimeout(hideLoader, 10000);
   </script>
 
   <script src="/DORAK/flutter_bootstrap.js" async></script>
